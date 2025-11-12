@@ -26,8 +26,10 @@ pipeline {
         }
 
         stage('Run Container') {
-            steps {
-                sh 'docker run -d --name hello_world_container -p 5000:5000 ${IMAGE_NAME}'
+            steps { sh '''
+            docker rm -f hello_world_container || true
+            docker run -d --name hello_world_container -p 5000:5000 hello_world_app
+        '''
             }
         }
     }
