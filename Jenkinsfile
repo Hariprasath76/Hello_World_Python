@@ -42,4 +42,48 @@ pipeline {
             echo "❌ Build failed."
         }
     }
+    post {
+    success {
+        emailext(
+            to: 'hariprasathawsdevops@gmail.com',
+            subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+            Hello Hari 👋,
+
+            ✅ Build Successful!
+
+            • Job: ${env.JOB_NAME}
+            • Build Number: ${env.BUILD_NUMBER}
+            • Branch: ${env.GIT_BRANCH}
+            • Commit: ${env.GIT_COMMIT}
+
+            View build details here:
+            ${env.BUILD_URL}
+
+            Best,
+            Jenkins 🚀
+            """
+        )
+    }
+    failure {
+        emailext(
+            to: 'hariprasathawsdevops@gmail.com',
+            subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+            Hello Hari 👋,
+
+            ❌ Build Failed.
+
+            • Job: ${env.JOB_NAME}
+            • Build Number: ${env.BUILD_NUMBER}
+
+            Check the logs here:
+            ${env.BUILD_URL}
+
+            - Jenkins 🤖
+            """
+        )
+    }
+}
+
 }
