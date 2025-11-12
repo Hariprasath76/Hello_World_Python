@@ -38,7 +38,7 @@ pipeline {
         success {
             echo '✅ Build succeeded!'
             emailext(
-                to: 'hariprasathawsdevops@gmail.com',
+                to: 'hariprasathsara173@gmail.com',
                 subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                 Hello Hari 👋,
@@ -62,7 +62,7 @@ pipeline {
         failure {
             echo '❌ Build failed!'
             emailext(
-                to: 'hariprasathawsdevops@gmail.com',
+                to: 'hariprasathsara173@gmail.com',
                 subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                 Hello Hari 👋,
