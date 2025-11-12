@@ -35,49 +35,27 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ Build succeeded!'
+    always {
+        script {
+            def buildStatus = currentBuild.currentResult ?: "UNKNOWN"
             emailext(
-                to: 'hariprasathsara173@gmail.com',
-                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                from: 'jenkins@grouppal.in',
+                to: 'hariprasath.m@grouppal.in,ajithkumar.k@grouppal.in,magudeeswaran.t@grouppal.in',
+                subject: "Build ${JOB_NAME} #${BUILD_NUMBER} - ${buildStatus}",
                 body: """
-                Hello Hari 👋,
-
-                ✅ Build Successful!
-
-                • Job: ${env.JOB_NAME}
-                • Build Number: ${env.BUILD_NUMBER}
-                • Branch: ${env.GIT_BRANCH}
-                • Commit: ${env.GIT_COMMIT}
-
-                View build details here:
-                ${env.BUILD_URL}
-
-                Best,
-                Jenkins 🚀
-                """
-            )
+                    <p>Hi Team,</p>
+                    <p>The build <b>${JOB_NAME} #${BUILD_NUMBER}</b> has finished with status:
+                    <b style="color:${buildStatus == 'SUCCESS' ? 'green' : buildStatus == 'FAILURE' ? 'red' : 'orange'}">
+                        ${buildStatus}
+                    </b></p>
+                    <p>Check the full console output at:
+                    <a href="${BUILD_URL}">${BUILD_URL}</a></p>
+                    <p>Regards,<br>Jenkins Server</p>
+                """,
+                mimeType: 'text/html',
+                attachLog: true
+             )
         }
-
-        failure {
-            echo '❌ Build failed!'
-            emailext(
-                to: 'hariprasathsara173@gmail.com',
-                subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                Hello Hari 👋,
-
-                ❌ Build Failed.
-
-                • Job: ${env.JOB_NAME}
-                • Build Number: ${env.BUILD_NUMBER}
-
-                Check the logs here:
-                ${env.BUILD_URL}
-
-                - Jenkins 🤖
-                """
-            )
-        }
+    }
     }
 }
