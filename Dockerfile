@@ -8,7 +8,9 @@ WORKDIR /app
 COPY . /app
 
 #Install dependencies - requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt || true
+RUN pip install --no-cache-dir django
+EXPOSE 8000
+
 
 # Run the Python app
-CMD ["python", "hello.py"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
