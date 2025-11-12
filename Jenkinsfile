@@ -40,7 +40,7 @@ pipeline {
             def buildStatus = currentBuild.currentResult ?: "UNKNOWN"
             emailext(
                 from: 'jenkins@grouppal.in',
-                to: 'hariprasath.m@grouppal.in,ajithkumar.k@grouppal.in,magudeeswaran.t@grouppal.in',
+                to: 'hariprasathawsdevops@gmail.com',
                 subject: "Build ${JOB_NAME} #${BUILD_NUMBER} - ${buildStatus}",
                 body: """
                     <p>Hi Team,</p>
